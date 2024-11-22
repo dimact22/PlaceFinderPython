@@ -1,0 +1,36 @@
+name: Python Selenium Tests
+
+on:
+  push:
+    branches:
+      - main      # Застосовувати для кожного пушу на гілку main
+  pull_request:
+    branches:
+      - main      # Застосовувати для кожного пул-реквесту в main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest  # Вказуємо, що CI/CD буде працювати на останньому Ubuntu
+
+    services:
+      selenium:
+        image: selenium/standalone-chrome:latest  # Запускаємо контейнер Selenium з браузером Chrome
+        options: --shm-size 2g  # Додаємо опцію для збільшення пам'яті для Selenium
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2  # Крок для клону репозиторію на CI/CD сервер
+
+    - name: Set up Python
+      uses: actions/setup-python@v2  # Налаштовуємо Python середовище
+      with:
+        python-version: '3.8'  # Вказуємо потрібну версію Python
+
+    - name: Install dependencies
+      run: |
+        pip install -r requirements.txt  # Встановлюємо залежності з файлу requirements.txt
+        pip install selenium  # Встановлюємо бібліотеку selenium
+
+    - name: Run tests
+      run: |
+        python -m unittest discover -s tests  # Запускаємо тести
