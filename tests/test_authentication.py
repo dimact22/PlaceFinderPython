@@ -17,8 +17,6 @@ class TestAuthentication(unittest.TestCase):
         driver.find_element(By.NAME, 'email').send_keys('john.doe@gmail.com')
         driver.find_element(By.NAME, 'password').send_keys('SecurePassword_123')
         driver.find_element(By.CSS_SELECTOR, '.form-button').click()
-        
-        
         time.sleep(2) 
 
         
